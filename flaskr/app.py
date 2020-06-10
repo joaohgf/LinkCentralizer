@@ -15,7 +15,7 @@ def create_api(app: Flask) -> None:
     :return:
     """
     api = Api(app)
-    api.add_resource(CatalogResource, '/api/v1/catalog/')
+    api.add_resource(CatalogResource, '/api/v1/catalog/<int:user_id>')
     api.add_resource(HealthcheckResource, '/')
 
 

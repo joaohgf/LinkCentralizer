@@ -1,5 +1,5 @@
-from services.catalog_service import CatalogService
-
+from ..services.catalog_service import CatalogService
+from typing import Tuple
 
 class CatalogFacade:
     """ class responsible for seeking catalog services """
@@ -12,4 +12,6 @@ class CatalogFacade:
         :param data:
         :return:
         """
+        pass
+    def get_catalog(self, user_id) -> Tuple[list, int]:
         pass
