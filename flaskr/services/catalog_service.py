@@ -34,12 +34,11 @@ class CatalogService:
         arg.add_argument('logo')
         arg.add_argument('links')
         data : Dict = arg.parse_args()
-        img : Dict = ast.literal_eval(data['background'])['image']
-        color : Dict = ast.literal_eval(data['background'])['colors']
+        background : Dict = ast.literal_eval(data['background'])
         NEW_INFOS : Dict = {
             "user_id": user_id,
-             "background": {"colors" : color,
-                            "images": img
+             "background": {"colors" : background['colors'],
+                            "images": background['image']
                             },
              "logo": data['logo'],
              "links": data['links']
