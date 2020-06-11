@@ -1,5 +1,5 @@
-from ..services.catalog_service import CatalogService
-from typing import Tuple
+from services.catalog_service import CatalogService
+from typing import Tuple, List
 
 class CatalogFacade:
     """ class responsible for seeking catalog services """
@@ -13,5 +13,8 @@ class CatalogFacade:
         :return:
         """
         pass
-    def get_catalog(self, user_id) -> Tuple[list, int]:
-        pass
+
+    ## Usando lista somente para conseguir me retornar a lista de dicts
+    def get_catalog(self, user_id) -> Tuple[str, int]:
+        catalog : Tuple = CatalogService.get(self, user_id)
+        return catalog
