@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple
-
+from flask_restful import reqparse
+import ast
 INFOS: List = [
         {"user_id": 1,
             "background": {
@@ -26,14 +27,35 @@ INFOS: List = [
 class CatalogService:
     def __init__(self):
         pass
+    ## não usei type hint ainda
+    def save(self, user_id) -> Tuple[List, int]:
+        arg = reqparse.RequestParser()
+        arg.add_argument('background')
+        arg.add_argument('logo')
+        arg.add_argument('links')
+        data : Dict = arg.parse_args()
+        img : Dict = ast.literal_eval(data['background'])['image']
+        color : Dict = ast.literal_eval(data['background'])['colors']
+        NEW_INFOS : Dict = {
+            "user_id": user_id,
+             "background": {"colors" : color,
+                            "images": img
+                            },
+             "logo": data['logo'],
+             "links": data['links']
+            }
+        INFOS.append(NEW_INFOS)
+        return NEW_INFOS, 200
 
-    def save(self):
-        pass
+
     ## Usando lista somente para retornar o valor de infos
     def get(self, user_id)-> Tuple[List, int]:
-        for info in INFOS:
-            if info['user_id'] == user_id:
-                return info
+        if user_id == 0:
+            return INFOS
+        else:
+            for info in INFOS:
+                if info['user_id'] == user_id:
+                    return info
 
 
 

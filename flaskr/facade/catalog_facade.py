@@ -1,20 +1,16 @@
 from services.catalog_service import CatalogService
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 
 class CatalogFacade:
     """ class responsible for seeking catalog services """
     def __init__(self) -> None:
         self._catalog_service = CatalogService()
 
-    def save_catalog(self, data) -> None:
-        """
-        facade method to save the catalog in the database
-        :param data:
-        :return:
-        """
-        pass
+    def save_catalog(self, user_id) -> Tuple[List, int]:
+        catalog : List = CatalogService.save(self, user_id)
+        return catalog
 
     ## Usando lista somente para conseguir me retornar a lista de dicts
-    def get_catalog(self, user_id) -> Tuple[str, int]:
-        catalog : Tuple = CatalogService.get(self, user_id)
-        return catalog
+    def get_catalog(self, user_id) -> Tuple[List, int]:
+        catalog : List = CatalogService.get(self, user_id)
+        return catalog, 200
