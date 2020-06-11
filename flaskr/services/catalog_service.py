@@ -1,6 +1,6 @@
 from typing import List, Dict, Tuple
 
-infos: List = [
+INFOS: List = [
         {"user_id": 1,
             "background": {
                           "colors": ["#FDD900"],
@@ -31,7 +31,7 @@ class CatalogService:
         pass
     ## Usando lista somente para retornar o valor de infos
     def get(self, user_id)-> Tuple[List, int]:
-        for info in infos:
+        for info in INFOS:
             if info['user_id'] == user_id:
                 return info
 
