@@ -13,4 +13,8 @@ class CatalogFacade:
     ## Usando lista somente para conseguir me retornar a lista de dicts
     def get_catalog(self, user_id) -> Tuple[List, int]:
         catalog : List = CatalogService.get(self, user_id)
-        return catalog, 200
+        return catalog
+
+    def update_catalog(self, user_id) ->Tuple[List, int]:
+        catalog : List = CatalogService.put(self, user_id)
+        return catalog

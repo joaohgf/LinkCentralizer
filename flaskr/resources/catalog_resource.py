@@ -13,3 +13,7 @@ class CatalogResource(Resource):
     def post(self, user_id)-> Tuple[Dict, int]:
         create_catalog : Dict = CatalogFacade.save_catalog(self, user_id)
         return create_catalog
+
+    def put(self, user_id)-> Tuple[Dict, int]:
+        update_catalog : Dict = CatalogFacade.update_catalog(self,user_id)
+        return update_catalog

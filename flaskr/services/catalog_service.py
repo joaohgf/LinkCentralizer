@@ -25,23 +25,32 @@ INFOS: List = [
                       }
     ]
 class CatalogService:
+    arg = reqparse.RequestParser()
+    arg.add_argument('background')
+    arg.add_argument('logo')
+    arg.add_argument('links')
+
     def __init__(self):
         pass
-    ## não usei type hint ainda
-    def save(self, user_id) -> Tuple[List, int]:
-        arg = reqparse.RequestParser()
-        arg.add_argument('background')
-        arg.add_argument('logo')
-        arg.add_argument('links')
-        data : Dict = arg.parse_args()
+
+    def find_catalog(self):
+        for info in INFOS:
+            if info['user_id'] == self:
+                return info
+        return None
+
+    def save(self, user_id) -> Tuple[Dict, int]:
+
+        data : Dict = CatalogService.arg.parse_args()
         background : Dict = ast.literal_eval(data['background'])
+        link : Dict =  ast.literal_eval(data['links'])
         NEW_INFOS : Dict = {
             "user_id": user_id,
              "background": {"colors" : background['colors'],
                             "images": background['image']
                             },
              "logo": data['logo'],
-             "links": data['links']
+             "links": link
             }
         INFOS.append(NEW_INFOS)
         return NEW_INFOS, 200
@@ -49,15 +58,25 @@ class CatalogService:
 
     ## Usando lista somente para retornar o valor de infos
     def get(self, user_id)-> Tuple[List, int]:
+
         if user_id == 0:
-            return INFOS
+            return INFOS, 200
         else:
             for info in INFOS:
                 if info['user_id'] == user_id:
                     return info
 
-
-
-
-
-
+    def put(self, user_id) -> Tuple[Dict, int]:
+        data : Dict = CatalogService.arg.parse_args()
+        background : Dict = ast.literal_eval(data['background'])
+        link : Dict = ast.literal_eval(data['links'])
+        data['background'] = background
+        data['links'] = link
+        NEW_INFOS : Dict = {"user_id": user_id,
+                            **data}
+        catalog : Dict = CatalogService.find_catalog(user_id)
+        if catalog:
+            catalog.update(NEW_INFOS)
+            return catalog, 200
+        INFOS.append(NEW_INFOS)
+        return NEW_INFOS, 201
